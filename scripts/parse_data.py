@@ -1,6 +1,7 @@
 import pandas as pd
 import json
 from collections import defaultdict
+from tqdm import tqdm
 
 # Establishes the primary categories and their counts processed by defined panda chunk sizes
 def process_chunk(chunk, counters):    
@@ -17,11 +18,12 @@ def process_chunk(chunk, counters):
                 counters['race_inventory_counter'][race][item] += 1
                 counters['class_inventory_counter'][class_][item] += 1
 
-def calculate_weights(counters, total_records):
-    def calculate_percentage(counter, total):
-        return {key: count / total for key, count in counter.items()}
+# Defines the formula to calculate the weights of different categories based on their counts
+def calculate_percentage(counter, total):
+    return {key: count / total for key, count in counter.items()}
 
-    # Calculates the weights of different categories based on their counts and function math above
+# Calculates the weights with the formula above
+def calculate_weights(counters, total_records):
     race_weights = calculate_percentage(counters['race_counter'], total_records)
     class_weights = calculate_percentage(counters['class_counter'], total_records)
     inventory_weights = calculate_percentage(counters['inventory_counter'], sum(counters['inventory_counter'].values()))
@@ -60,6 +62,8 @@ def calculate_weights(counters, total_records):
 
 # Reads file_path in chunks because 1 million records is too large to read all at once
 def process_data(file_path, chunksize=1000):
+    total_rows = sum(1 for _ in open(file_path)) - 1
+    total_chunks = (total_rows // chunksize) + 1
     data = pd.read_csv(file_path, chunksize=chunksize)
 
     counters = {
@@ -74,15 +78,12 @@ def process_data(file_path, chunksize=1000):
 
     total_records = 0
 
-    for chunk in data:
+    for chunk in tqdm(data, desc='Processing data in chunks of 1000', unit="chunks", total=total_chunks, ncols=100, bar_format='{desc}: {percentage:3.0f}% |{bar}| {n_fmt}/{total_fmt} {postfix}'):
         process_chunk(chunk, counters)
         total_records += len(chunk)
 
-    return calculate_weights(counters, total_records)
+    weights = calculate_weights(counters, total_records)
 
-file_path = 'data/oomc_full.csv'
+    print(f'Sum of class wights: {sum(weights["class_weights"].values())}')
 
-weights = process_data(file_path)
-
-with open('parsed_data.json', 'w') as f:
-    json.dump(weights, f, indent=4)
+    return weights

@@ -1,4 +1,5 @@
-# Function to test the normalization of the output weights, only hardcoded in its current form
+# Function to test the normalization of the output weights to ensure that the output sums to 1; only hardcoded in its current form
+# This example set is all the races and subclasses
 data = {
     "Aarakocra": 0.027775181629698577,
         "Aasimar": 0.03543233495015078,
@@ -794,6 +795,9 @@ data = {
         "Zuggtmoy's Spawn (Tiefling Subrace)": 1.90737409900416e-06
 }          
 
-total = sum(data.values())
+normal_value = sum(data.values())
 
-print(total)
+with open("total.txt", "w") as f:
+    f.write(f'normalized value: {normal_value}')
+
+print(normal_value)
