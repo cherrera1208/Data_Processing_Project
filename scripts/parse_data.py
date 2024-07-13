@@ -62,7 +62,7 @@ def calculate_weights(counters, total_records):
 
 # Reads file_path in chunks because 1 million records is too large to read all at once
 def process_data(file_path, chunksize=1000):
-    total_rows = sum(1 for _ in open(file_path)) - 1
+    total_rows = sum(1 for _ in open(file_path, encoding='utf-8')) - 1
     total_chunks = (total_rows // chunksize) + 1
     data = pd.read_csv(file_path, chunksize=chunksize)
 

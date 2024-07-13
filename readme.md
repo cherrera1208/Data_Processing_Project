@@ -1,7 +1,7 @@
 # Data Processing and Analysis Tool
 
 ## Overview
-This project is a tool for processing and analyzing large datasets from CSV files. It reads data, assigns weights, and performs basic analysis to count occurrences and instances.
+This project is a tool for processing and analyzing large datasets from CSV files. It reads data, assigns weights, and performs basic analysis to count occurrences and instances. The data set is a from a million person survey from the official DnD website. I'm not sure why this set inspired me to learn data manipulation in Python, probably because of Baldur's Gate 3
 
 ## Features
 - Efficient data processing for large datasets using chunk processing
@@ -65,3 +65,10 @@ The project could be improved with:
   - Refactor agg.py script to accept the parsed_data.json file and aggregate based on base categories of json, as it is now, it can only read a hardcoded dictionary of data. This is not useful as is
   - Utilize the aggregated data to more refine the results
   - Visualization of the data in a dashboard using Django or a similar library
+
+## Showcase
+
+Snapshots of the original working data and the processed JSON results 
+
+![CSV Sample](WorkingDataSample.png)
+![JSON Example](ParsedDataJSON.png)
