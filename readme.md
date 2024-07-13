@@ -14,8 +14,8 @@ This project is a tool for processing and analyzing large datasets from CSV file
  - Python
  - WSL Terminal
  - Pandas
- - NumPy
  - NLTK
+ - JSON
  - git (github, git large file storage)
 
 ## Installation and Usage
