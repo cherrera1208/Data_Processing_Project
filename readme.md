@@ -19,11 +19,6 @@ This project is a tool for processing and analyzing large datasets from CSV file
  - git (github, git large file storage)
 
 ## Installation and Usage
-To install the necessary dependencies, run:
-```
-pip install -r requirements.txt
-```
-To run the parsing and term frequency scripts:
 ```
 python3 main.py
 ```
